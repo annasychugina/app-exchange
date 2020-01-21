@@ -1,0 +1,8 @@
+{
+  "extends": "stylelint-config-recommended",
+  "rules": {
+    "at-rule-empty-line-before": null,
+    "string-quotes": "single",
+    "no-empty-source": null
+  }
+}
