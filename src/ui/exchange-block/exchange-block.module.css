@@ -1,0 +1,30 @@
+.root {
+  &_origin {
+    background-color: #3F90EA;
+  }
+
+  &_result {
+    background-color: #337DCE;
+  }
+}
+
+.row {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+.block {
+  box-sizing: border-box;
+  padding: 40px 50px 46px;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: 26px;
+  color: white;
+}
+
+.text {
+  margin-top: 15px;
+  color: white;
+  font-size: 12px;
+}

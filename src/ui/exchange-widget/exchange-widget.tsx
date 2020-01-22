@@ -1,22 +1,23 @@
 import React from 'react';
-import {Slider} from '../slider/slider';
 import {Button} from "../button/button";
 import resources from './config.json';
+
 import s from './exchange-widget.module.css';
+import {ExchangeBlock} from "../exchange-block/exchange-block";
+import {CurrencyBlockType} from "../../types/types";
 
 interface Props {}
 
-export const CURRENCY = ['RUB', 'USD', 'EUR', 'GBP'];
 
 export const ExchangeWidget: React.FC<Props> = () => (
-  <div>
-    <Slider>
-      {CURRENCY.map(item => (
-        <div>{item}</div>
-      ))}
-    </Slider>
-    <Button type='submit' className={s.submitBtn} onClick={() => console.log('click')} title={resources.ExchangeWidget.buttonTitle}>
-        {resources.ExchangeWidget.buttonText}
-      </Button>
-  </div>
+  <section className={s.root}>
+    <div className={s.content}>
+      <ExchangeBlock currency='RUB' type={CurrencyBlockType.origin}/>
+      <ExchangeBlock currency='USD' type={CurrencyBlockType.result}/>
+    </div>
+    <Button type='submit' className={s.submitBtn} onClick={() => console.log('click')}
+            title={resources.ExchangeWidget.buttonTitle}>
+      {resources.ExchangeWidget.buttonText}
+    </Button>
+  </section>
 );

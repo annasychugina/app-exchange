@@ -10,15 +10,12 @@ type Props = {
   className?: string;
 };
 
-export const ANIMATION_SPEED = 500;
-export const SLIDES_TO_SHOW_MAX_COUNT = 3;
-export const SLIDES_TO_SCROLL_COUNT = 1;
-
 const sliderSettings = {
   dots: true,
   arrows: true,
   infinite: false,
-  speed: ANIMATION_SPEED,
+  speed: 300,
+  currentSlide: 0
 };
 
 export const Slider: React.FC<Props> = ({children}) => {
@@ -26,7 +23,7 @@ export const Slider: React.FC<Props> = ({children}) => {
     <SlickSlider {...sliderSettings}>
       {children.map(
         (slide: ReactNode, index: number): React.ReactElement => (
-          <div key={index} className={s.slide}>
+          <div className={s.slide} key={index}>
             {slide}
           </div>
         ),
