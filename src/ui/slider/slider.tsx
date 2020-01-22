@@ -3,6 +3,7 @@ import SlickSlider from 'react-slick';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import './slick.css';
 import s from './slider.module.css';
 
 type Props = {
@@ -14,7 +15,7 @@ const sliderSettings = {
   dots: true,
   arrows: true,
   infinite: false,
-  speed: 300,
+  speed: 260,
   currentSlide: 0
 };
 

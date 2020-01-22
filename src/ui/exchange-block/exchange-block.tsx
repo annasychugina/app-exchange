@@ -21,7 +21,7 @@ export const ExchangeBlock: React.FC<Props> = ({currency, type}) => (
        {CURRENCY.map((item) =>  <div className={s.block}>
          <div className={s.row}>
            <div>{currency}</div>
-           <InputCurrency name={currency} onChange={() => console.log('')} />
+           <InputCurrency focused={type === CurrencyBlockType.origin} name={currency} onChange={() => console.log('')} />
          </div>
          <div className={s.row}>
            <p className={s.text}>You have 3455 D</p>

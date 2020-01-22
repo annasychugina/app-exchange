@@ -4,7 +4,7 @@ import {store} from '../../store/store';
 import {ExchangeWidget} from '../exchange-widget/exchange-widget';
 import s from './app.module.css';
 
-const App: React.FC = () => {
+export const App: React.FC = () => {
   return (
     <Provider store={store}>
       <div className={s.container}>
@@ -15,5 +15,3 @@ const App: React.FC = () => {
     </Provider>
   );
 };
-
-export default App;
