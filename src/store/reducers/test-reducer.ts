@@ -6,13 +6,11 @@ export const initialState: any = {};
 
 export const TestReducer = createReducer(
   {
-    [success.getType()]: (
-      state: any
-    ) => {
+    [success.getType()]: (state: any) => {
       return {
-        ...state
-      }
-    }
+        ...state,
+      };
+    },
   },
   initialState,
 );

@@ -1,0 +1,48 @@
+.button {
+  display: inline-block;
+  line-height: 24px;
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+  color: white;
+  cursor: pointer;
+  background-color: rgb(235, 0, 141);
+  transition: all 0.2s ease 0s;
+  outline: none;
+  border-radius: 40px;
+  user-select: none;
+  padding: 10px 24px;
+
+  &:disabled {
+    opacity: .2;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
+
+  &:hover {
+    background-color: rgb(210, 0, 126);
+  }
+  &:active {
+    background-color: rgb(235, 0, 141);
+  }
+}
+
+.loader {
+  margin-right: auto;
+  margin-left: auto;
+  display: block;
+  animation: spinner-rotate 3s linear infinite;
+}
+
+.circle {
+  fill: none;
+  stroke-dasharray: 280;
+  stroke-dashoffset: 100;
+  stroke-linecap: round;
+  stroke-width: 5;
+  animation: spinner-offset 3s linear infinite;
+
+  &_color {
+    stroke: white;
+  }
+}
