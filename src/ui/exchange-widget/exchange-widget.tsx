@@ -1,7 +1,8 @@
 import React from 'react';
 import {Slider} from '../slider/slider';
 import {Button} from "../button/button";
-import s from './exchange-widget.css';
+import resources from './config.json';
+import s from './exchange-widget.module.css';
 
 interface Props {}
 
@@ -14,6 +15,8 @@ export const ExchangeWidget: React.FC<Props> = () => (
         <div>{item}</div>
       ))}
     </Slider>
-    <Button className={s.submitBtn} onClick={() => console.log('click')} title={"Done"}/>
+    <Button type='submit' className={s.submitBtn} onClick={() => console.log('click')} title={resources.ExchangeWidget.buttonTitle}>
+        {resources.ExchangeWidget.buttonText}
+      </Button>
   </div>
 );

@@ -1,6 +1,6 @@
 .button {
   display: inline-block;
-  line-height: 24px;
+  line-height: 20px;
   font-size: 16px;
   font-weight: 500;
   text-align: center;
@@ -12,6 +12,7 @@
   border-radius: 40px;
   user-select: none;
   padding: 10px 24px;
+  border-style: none;
 
   &:disabled {
     opacity: .2;
@@ -41,8 +42,20 @@
   stroke-linecap: round;
   stroke-width: 5;
   animation: spinner-offset 3s linear infinite;
+  stroke: white;
+}
 
-  &_color {
-    stroke: white;
+
+@keyframes spinner-rotate {
+  0% {
+    transform: rotate(0);
+  }
+
+  50% {
+    transform: rotate(360deg);
+  }
+
+  100% {
+    transform: rotate(1080deg);
   }
 }
