@@ -1,5 +1,5 @@
 .root {
-  &_origin {
+  &_currencyFrom {
     position: relative;
    background: linear-gradient(to bottom, #1E91E4, #3F90EA);
     &::after {
@@ -15,7 +15,7 @@
     }
   }
 
-  &_result {
+  &_currencyTo {
     background: linear-gradient(to bottom,  #2351C2, #2757CC);
   }
 }
@@ -25,7 +25,11 @@
   width: 100%;
   justify-content: space-between;
   align-items: center;
+  &_rate {
+    justify-content: flex-end;
+  }
 }
+
 .block {
   box-sizing: border-box;
   padding: 40px 50px 46px;

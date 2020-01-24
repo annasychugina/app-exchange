@@ -1,6 +1,6 @@
-import {Currency, GlobalState} from "../types/types";
-import { Dispatch } from 'redux';
-import {getRates,ApiRatesResponse, Rate} from '../services/rates';
+import {Currency, GlobalState} from '../types/types';
+import {Dispatch} from 'redux';
+import {getRates, ApiRatesResponse, Rate} from '../services/rates';
 
 export enum ActionType {
   RATES_REQUEST = 'RATES_REQUEST',
@@ -32,31 +32,27 @@ interface RatesResponseSuccessAction {
 }
 
 const ratesRequest = (currency: Currency) => ({
-  payload: { currency },
+  payload: {currency},
   type: ActionType.RATES_REQUEST,
 });
 
 const ratesResponseSuccess = (currency: Currency, rates: Rate) => ({
-  payload: { currency, rates },
+  payload: {currency, rates},
   type: ActionType.RATES_RESPONSE_SUCCESS,
 });
 
 // TODO get error response
 const ratesResponseError = (currency: Currency) => ({
-  payload: { currency },
+  payload: {currency},
   type: ActionType.RATES_RESPONSE_ERROR,
 });
 
-export const updateRatesForCurrency = (currency: Currency) =>
-  (dispatch: Dispatch) => {
-    dispatch(ratesRequest(currency));
-    return getRates(currency)
-      .then(({rates}) => {
-        dispatch(ratesResponseSuccess(currency, rates))
-      })
-      .catch((err) => console.log(err));
-  };
-export type TRateAction =
-  RatesRequestAction
-  | RatesResponseErrorAction
-  | RatesResponseSuccessAction;
+export const updateRatesForCurrency = (currency: Currency) => (dispatch: Dispatch) => {
+  dispatch(ratesRequest(currency));
+  return getRates(currency)
+    .then(({rates}) => {
+      dispatch(ratesResponseSuccess(currency, rates));
+    })
+    .catch(err => console.log(err));
+};
+export type TRateAction = RatesRequestAction | RatesResponseErrorAction | RatesResponseSuccessAction;

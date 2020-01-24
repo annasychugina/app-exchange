@@ -9,6 +9,7 @@ import s from './slider.module.css';
 type Props = {
   children: ReactNode[];
   className?: string;
+  onSlideChange: (index: number) => void;
 };
 
 const sliderSettings = {
@@ -16,12 +17,12 @@ const sliderSettings = {
   arrows: true,
   infinite: false,
   speed: 260,
-  currentSlide: 0
+  currentSlide: 0,
 };
 
-export const Slider: React.FC<Props> = ({children}) => {
+export const Slider: React.FC<Props> = ({children, onSlideChange}) => {
   return (
-    <SlickSlider {...sliderSettings}>
+    <SlickSlider {...sliderSettings} afterChange={index => onSlideChange(index)}>
       {children.map(
         (slide: ReactNode, index: number): React.ReactElement => (
           <div className={s.slide} key={index}>

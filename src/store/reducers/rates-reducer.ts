@@ -1,5 +1,5 @@
-import { ActionType, TRateAction } from '../../actions/updateRates';
-import {RatesState} from "../../types/types";
+import {ActionType, TRateAction} from '../../actions/updateRates';
+import {RatesState} from '../../types/types';
 
 export const ratesReducer = (state: RatesState = {}, action: TRateAction): RatesState => {
   switch (action.type) {
@@ -11,21 +11,22 @@ export const ratesReducer = (state: RatesState = {}, action: TRateAction): Rates
         [currency]: {
           // @ts-ignore
           ...state[currency],
-          fetched: true,
+          loading: true,
         },
       };
     }
 
     case ActionType.RATES_RESPONSE_SUCCESS: {
       // @ts-ignore
-      const {currency,rates} = action.payload;
+      const {currency, rates} = action.payload;
       return {
         ...state,
         [currency]: {
           // @ts-ignore
           ...state[currency],
           rates,
-          fetched: false,
+          loaded: true,
+          loading: false,
         },
       };
     }
@@ -37,7 +38,7 @@ export const ratesReducer = (state: RatesState = {}, action: TRateAction): Rates
         [currency]: {
           // @ts-ignore
           ...state[currency],
-          fetched: false,
+          loading: false,
         },
       };
     }
