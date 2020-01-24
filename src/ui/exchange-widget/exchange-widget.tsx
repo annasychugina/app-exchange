@@ -1,16 +1,24 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Button} from "../button/button";
 import resources from './config.json';
 
 import s from './exchange-widget.module.css';
 import {ExchangeBlock} from "../exchange-block/exchange-block";
 import {CurrencyBlockType} from "../../types/types";
+import {useDispatch} from "react-redux";
+import {updateRatesForCurrency} from "../../actions/updateRates";
 
 interface Props {}
 
 
-export const ExchangeWidget: React.FC<Props> = () => (
-  <section className={s.root}>
+export const ExchangeWidget: React.FC<Props> = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(updateRatesForCurrency('RUB'))
+  }, [])
+
+  return   <section className={s.root}>
     <div className={s.content}>
       <ExchangeBlock currency='RUB' type={CurrencyBlockType.origin}/>
       <ExchangeBlock currency='USD' type={CurrencyBlockType.result}/>
@@ -20,4 +28,4 @@ export const ExchangeWidget: React.FC<Props> = () => (
       {resources.ExchangeWidget.buttonText}
     </Button>
   </section>
-);
+}

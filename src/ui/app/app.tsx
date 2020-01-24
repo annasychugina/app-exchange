@@ -1,5 +1,5 @@
-import React from 'react';
-import {Provider} from 'react-redux';
+import React, {useEffect} from 'react';
+import {Provider ,useDispatch} from 'react-redux';
 import {store} from '../../store/store';
 import {ExchangeWidget} from '../exchange-widget/exchange-widget';
 import s from './app.module.css';
