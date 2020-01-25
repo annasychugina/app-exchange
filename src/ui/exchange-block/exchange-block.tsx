@@ -1,6 +1,6 @@
-import React, {useRef, useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import cn from 'classnames';
-import {Currency, CurrencyBlockType, FormState} from '../../types/types';
+import {Currency, CurrencyBlockType} from '../../types/types';
 import s from './exchange-block.module.css';
 import {FieldInputCallback, FormattedInput} from '../formatted-input/formatted-input';
 import {Slider} from '../slider/slider';

@@ -1,4 +1,4 @@
-import {Currency, GlobalState} from '../types/types';
+import {Currency} from '../types/types';
 import {Dispatch} from 'redux';
 import {getRates, ApiRatesResponse, Rate} from '../services/rates';
 
@@ -53,6 +53,6 @@ export const updateRatesForCurrency = (currency: Currency) => (dispatch: Dispatc
     .then(({rates}) => {
       dispatch(ratesResponseSuccess(currency, rates));
     })
-    .catch(err => console.log(err));
+    .catch(() => dispatch(ratesResponseError(currency)));
 };
 export type TRateAction = RatesRequestAction | RatesResponseErrorAction | RatesResponseSuccessAction;

@@ -1,10 +1,10 @@
-import React, {useEffect, useState, useMemo} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useSelector, shallowEqual} from 'react-redux';
 import {Button} from '../button/button';
 import resources from './config.json';
 import {ExchangeBlock} from '../exchange-block/exchange-block';
 import {Currency, CurrencyBlockType, GlobalState, FormState} from '../../types/types';
-import {useDispatch, TypedUseSelectorHook} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {updateRatesForCurrency} from '../../actions/updateRates';
 import {CURRENCIES, UPDATE_RATES_DELAY} from '../../constants/currency';
 
@@ -91,16 +91,16 @@ export const ExchangeWidget: React.FC<Props> = () => {
       return;
     }
     dispatch(updateRatesForCurrency(currencyTo));
-    // function run() {
-    //   dispatch(updateRatesForCurrency(currencyTo));
-    //   setTimeout(run, UPDATE_RATES_DELAY);
-    // }
-    // const timerId = setTimeout(() => {
-    //   run();
-    // }, UPDATE_RATES_DELAY);
-    //
-    // return () => clearTimeout(timerId);
-  }, [currencyTo, currencyFrom]);
+    function run() {
+      dispatch(updateRatesForCurrency(currencyTo));
+      setTimeout(run, UPDATE_RATES_DELAY);
+    }
+    const timerId = setTimeout(() => {
+      run();
+    }, UPDATE_RATES_DELAY);
+
+    return () => clearTimeout(timerId);
+  }, [currencyTo, currencyFrom, dispatch]);
 
   const rates = useSelector((state: GlobalState) => state.rates, shallowEqual);
   const currencyToRates = rates[currencyTo];
@@ -152,7 +152,7 @@ export const ExchangeWidget: React.FC<Props> = () => {
       ...inputsState,
       [updateFieldName]: normalizedVal
     });
-  }, [updateFieldName]);
+  }, [updateFieldName, inputsState, rate]);
 
   const handleCurrencyValueChange = (floatValue: number, fieldName: string): void => {
     setState({
