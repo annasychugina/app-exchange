@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef, useEffect, useState} from 'react';
 import cn from 'classnames';
 import {Currency, CurrencyBlockType} from '../../types/types';
 import s from './exchange-block.module.css';
@@ -13,44 +13,60 @@ interface Props {
   currencyTo: Currency;
   rate?: number;
   type: CurrencyBlockType;
-  onCurrencyChange: (index: number) => void;
+  onCurrencyChange: (currency: Currency) => void;
+  currencyItems: Array<Currency>;
 }
 
-export const ExchangeBlock: React.FC<Props> = ({rate, currencyFrom, currencyTo, onCurrencyChange, type}) => {
+export const ExchangeBlock: React.FC<Props> = ({
+  currencyItems,
+  rate,
+  currencyFrom,
+  currencyTo,
+  onCurrencyChange,
+  type,
+}) => {
+  const [focused, setFocused] = useState(type === CurrencyBlockType.currencyFrom);
   const handleSlide = (index: number) => {
-    onCurrencyChange(index);
+    if (type === CurrencyBlockType.currencyFrom) {
+      setFocused(true)
+    }
+    const currency = CURRENCIES[index];
+    onCurrencyChange(currency);
   };
+  const handleClick = () => {
+    setFocused(true)
+  };
+  const currency = type === CurrencyBlockType.currencyTo ? currencyTo : currencyFrom;
+  console.log('focused', focused)
   return (
     <div className={cn(s.root, s[`root_${type}`])}>
-      <div>
-        <Slider onSlideChange={handleSlide}>
-          {CURRENCIES.map(item => (
-            <div className={s.block}>
-              <div className={s.row}>
-                <div>{type === CurrencyBlockType.currencyTo ? currencyTo : currencyFrom}</div>
-                <InputCurrency
-                  focused={type === CurrencyBlockType.currencyTo}
-                  name={type === CurrencyBlockType.currencyTo ? currencyTo : currencyFrom}
-                  onChange={() => console.log('')}
-                />
-              </div>
-              <div className={s.row}>
-                <p className={s.text}>You have 3455 D</p>
-              </div>
-              {type === CurrencyBlockType.currencyTo && (
-                <div className={cn(s.row, s.row_rate)}>
-                  <p className={s.text}>
-                    {resourcesTemplate(resources.ExchangeBlock.currencyRateText, {
-                      currencyTo: `${CURRENCY_SYMBOL_MAP[currencyTo]}1`,
-                      currencyFrom: `${CURRENCY_SYMBOL_MAP[currencyFrom]}${rate}`,
-                    })}
-                  </p>
-                </div>
-              )}
+      <Slider onSlideChange={handleSlide} currentSlide={CURRENCIES.indexOf(currency)}>
+        {CURRENCIES.map((currency, index) => (
+          <div key={currency} className={s.block} role="button" onClick={handleClick}>
+            <div className={s.row}>
+              <div>{currency}</div>
+              <InputCurrency
+                focused={focused}
+                name={currency}
+                onChange={() => console.log('')}
+              />
             </div>
-          ))}
-        </Slider>
-      </div>
+            <div className={s.row}>
+              <p className={s.text}>You have 3455 D</p>
+            </div>
+            {type === CurrencyBlockType.currencyTo && (
+              <div className={cn(s.row, s.row_rate)}>
+                <p className={cn(s.text, s.text_rate)}>
+                  {resourcesTemplate(resources.ExchangeBlock.currencyRateText, {
+                    currencyTo: `${CURRENCY_SYMBOL_MAP[currencyTo]}`,
+                    currencyFrom: `${CURRENCY_SYMBOL_MAP[currencyFrom]}${rate}`,
+                  })}
+                </p>
+              </div>
+            )}
+          </div>
+        ))}
+      </Slider>
     </div>
   );
 };

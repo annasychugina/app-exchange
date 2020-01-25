@@ -9,12 +9,13 @@ type Props = {
   onChange: FormFieldCallback;
 };
 
-export const InputCurrency: React.FC<Props> = ({focused = false, value, name}: Props): React.ReactElement => {
-  const inputRef = useRef<HTMLInputElement>(null);
-  useEffect(() => {
-    focused && inputRef.current && inputRef.current.focus();
-  }, [focused]);
-  return (
-    <input ref={inputRef} className={s.input} maxLength={14} name={name} autoComplete={'off'} value={value || ''} />
-  );
-};
+export const InputCurrency: React.FC<Props> =
+  ({focused = false, value, name}: Props): React.ReactElement => {
+    const inputRef = useRef<HTMLInputElement>(null);
+    useEffect(() => {
+      focused && inputRef.current && inputRef.current.focus();
+    }, [focused]);
+    return <input ref={inputRef} className={s.input} maxLength={14} name={name} autoComplete={'off'} value={value || ''} />;
+  }
+
+

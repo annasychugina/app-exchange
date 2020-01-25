@@ -43,4 +43,7 @@
   margin-top: 15px;
   color: rgba(255,255,255, .85);
   font-size: 12px;
+  &_rate {
+    margin-top: 0;
+  }
 }

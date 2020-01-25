@@ -15,8 +15,8 @@ interface Props {}
 interface ViewProps {
   currencyFrom: Currency;
   currencyTo: Currency;
-  handleCurrencyFromChange: (index: number) => void;
-  handleCurrencyToChange: (index: number) => void;
+  handleCurrencyFromChange: (currency: Currency) => void;
+  handleCurrencyToChange: (currency: Currency) => void;
   rate: number;
   isRateLoading: boolean;
 }
@@ -33,17 +33,23 @@ export const ExchangeWidgetView: React.FC<ViewProps> = ({
     <section className={s.root}>
       <div className={s.content}>
         <ExchangeBlock
-          onCurrencyChange={index => handleCurrencyFromChange(index)}
+          onCurrencyChange={currency => {
+            handleCurrencyFromChange(currency);
+          }}
           currencyTo={currencyTo}
           currencyFrom={currencyFrom}
           type={CurrencyBlockType.currencyFrom}
+          currencyItems={CURRENCIES}
         />
         <ExchangeBlock
           rate={rate}
-          onCurrencyChange={index => handleCurrencyToChange(index)}
+          onCurrencyChange={currency => {
+            handleCurrencyToChange(currency);
+          }}
           currencyTo={currencyTo}
           currencyFrom={currencyFrom}
           type={CurrencyBlockType.currencyTo}
+          currencyItems={CURRENCIES}
         />
       </div>
       <Button
@@ -62,34 +68,59 @@ export const ExchangeWidget: React.FC<Props> = () => {
   const dispatch = useDispatch();
   const [currencyTo, setCurrencyTo] = useState<Currency>('RUB');
   const [currencyFrom, setCurrencyFrom] = useState<Currency>('EUR');
-
   useEffect(() => {
     if (currencyTo === currencyFrom) {
       return;
     }
     dispatch(updateRatesForCurrency(currencyTo));
-    function run() {
-      dispatch(updateRatesForCurrency(currencyTo));
-      setTimeout(run, UPDATE_RATES_DELAY);
-    }
-    const timerId = setTimeout(() => {
-      run();
-    }, UPDATE_RATES_DELAY);
-
-    return () => clearTimeout(timerId);
-  }, [currencyTo]);
+    // function run() {
+    //   dispatch(updateRatesForCurrency(currencyTo));
+    //   setTimeout(run, UPDATE_RATES_DELAY);
+    // }
+    // const timerId = setTimeout(() => {
+    //   run();
+    // }, UPDATE_RATES_DELAY);
+    //
+    // return () => clearTimeout(timerId);
+  }, [currencyTo, currencyFrom]);
 
   const rates = useSelector((state: GlobalState) => state.rates, shallowEqual);
   const currencyToRates = rates[currencyTo];
 
-  const handleCurrencyFromChange = (index: number) => {
-    setCurrencyFrom(CURRENCIES[index]);
+  const handleCurrencyFromChange = (currency: Currency) => {
+    if (currency === currencyTo) {
+      const curIndex = CURRENCIES.indexOf(currency);
+      const prevIndex = CURRENCIES.indexOf(currencyTo);
+      const shift = curIndex > prevIndex ? -1 : 1;
+
+      const c =  CURRENCIES[
+      (CURRENCIES.length + curIndex + shift) % CURRENCIES.length
+        ];
+
+      setCurrencyFrom(c);
+    } else {
+      setCurrencyFrom(currency);
+    }
   };
 
-  const handleCurrencyToChange = (index: number) => {
-    setCurrencyTo(CURRENCIES[index]);
+  const handleCurrencyToChange = (currency: Currency) => {
+    console.log('currency123', currency)
+    if (currency === currencyFrom) {
+      console.log('F')
+      const curIndex = CURRENCIES.indexOf(currency);
+      const prevIndex = CURRENCIES.indexOf(currencyFrom);
+      const shift = curIndex > prevIndex ? -1 : 1;
+
+      const c =  CURRENCIES[
+      (CURRENCIES.length + curIndex + shift) % CURRENCIES.length
+        ];
+
+      setCurrencyFrom(c);
+    } else {
+      setCurrencyTo(currency);
+    }
+
   };
-  //rates[currencyFrom].rates[currencyTo]
 
   const rate = currencyToRates && currencyToRates.loaded && currencyToRates.rates[currencyFrom];
   return (
