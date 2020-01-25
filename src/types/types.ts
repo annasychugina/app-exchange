@@ -23,3 +23,8 @@ export type RatesState = {
 export interface GlobalState {
   rates: RatesState;
 }
+
+export interface FormState {
+  currencyTo?: number | null;
+  currencyFrom?: number | null;
+}

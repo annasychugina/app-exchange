@@ -1,42 +1,42 @@
 import React, {useRef, useEffect, useCallback} from 'react';
-import {FormFieldCallback} from '../../types/types';
 import NumberFormat from 'react-number-format';
-import s from './input-currency.module.css';
+import s from './formatted-input.module.css';
+
+export type FieldInputCallback  = (floatValue: number, fieldName: string) => void;
 
 type Props = {
   name: string;
-  value?: number;
+  value?: string;
   focused?: boolean;
   prefix: string;
-  onChange: (value: string) => void;
+  onChange: FieldInputCallback;
 };
-
-export const InputCurrency: React.FC<Props> =
-  ({focused = false, onChange, prefix, value, name}: Props): React.ReactElement => {
+export const FormattedInput: React.FC<Props> =
+  ({focused = false, onChange, prefix, value='', name}: Props): React.ReactElement => {
     const inputRef = useRef<HTMLInputElement>(null);
     useEffect(() => {
       focused && inputRef.current && inputRef.current.focus();
     }, [focused]);
 
     const handleChange = useCallback(
-      ({ value }: { value: string }) => {
-        onChange(value);
+      ({ floatValue }: { floatValue: number }) => {
+        onChange(floatValue, name);
       },
-      [onChange],
+      [onChange, name],
     );
 
-    return  <NumberFormat
+    return <NumberFormat
       className={s.input}
       getInputRef={inputRef}
       allowNegative={false}
       maxLength={16}
       name={name}
-      autoComplete={'off'}
       prefix={prefix}
-      value={value || ''}
+      value={value}
       thousandSeparator={' '}
+      autoComplete={'off'}
       onValueChange={handleChange}
     />
-  }
+  };
 
 

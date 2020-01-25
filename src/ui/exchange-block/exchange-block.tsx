@@ -1,8 +1,8 @@
 import React, {useRef, useEffect, useState} from 'react';
 import cn from 'classnames';
-import {Currency, CurrencyBlockType} from '../../types/types';
+import {Currency, CurrencyBlockType, FormState} from '../../types/types';
 import s from './exchange-block.module.css';
-import {InputCurrency} from '../input-currency/input-currency';
+import {FieldInputCallback, FormattedInput} from '../formatted-input/formatted-input';
 import {Slider} from '../slider/slider';
 import {CURRENCIES, CURRENCY_SYMBOL_MAP} from '../../constants/currency';
 import {resourcesTemplate} from '../../utils/resourcesTemplate';
@@ -12,8 +12,10 @@ interface Props {
   currencyFrom: Currency;
   currencyTo: Currency;
   rate?: number;
+  inputValue: string;
   type: CurrencyBlockType;
   onCurrencyChange: (currency: Currency) => void;
+  onCurrencyValueChange: FieldInputCallback
   currencyItems: Array<Currency>;
 }
 
@@ -23,7 +25,9 @@ export const ExchangeBlock: React.FC<Props> = ({
   currencyFrom,
   currencyTo,
   onCurrencyChange,
+  onCurrencyValueChange,
   type,
+  inputValue
 }) => {
   const [focused, setFocused] = useState(type === CurrencyBlockType.currencyFrom);
   const handleSlide = (index: number) => {
@@ -41,12 +45,13 @@ export const ExchangeBlock: React.FC<Props> = ({
         {CURRENCIES.map((currency, index) => (
           <div key={currency} className={s.block} role="button" onClick={handleClick}>
             <div className={s.row}>
-              <div>{currency}</div>
-              <InputCurrency
+              <p>{currency}</p>
+              <FormattedInput
                 prefix={type === CurrencyBlockType.currencyFrom ? '-' : '+'}
                 focused={focused}
-                name={currency}
-                onChange={() => console.log('')}
+                name={type}
+                value={inputValue}
+                onChange={onCurrencyValueChange}
               />
             </div>
             <div className={s.row}>
