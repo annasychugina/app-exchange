@@ -27,17 +27,14 @@ export const ExchangeBlock: React.FC<Props> = ({
 }) => {
   const [focused, setFocused] = useState(type === CurrencyBlockType.currencyFrom);
   const handleSlide = (index: number) => {
-    if (type === CurrencyBlockType.currencyFrom) {
-      setFocused(true)
-    }
     const currency = CURRENCIES[index];
     onCurrencyChange(currency);
   };
   const handleClick = () => {
     setFocused(true)
   };
+
   const currency = type === CurrencyBlockType.currencyTo ? currencyTo : currencyFrom;
-  console.log('focused', focused)
   return (
     <div className={cn(s.root, s[`root_${type}`])}>
       <Slider onSlideChange={handleSlide} currentSlide={CURRENCIES.indexOf(currency)}>
@@ -46,6 +43,7 @@ export const ExchangeBlock: React.FC<Props> = ({
             <div className={s.row}>
               <div>{currency}</div>
               <InputCurrency
+                prefix={type === CurrencyBlockType.currencyFrom ? '-' : '+'}
                 focused={focused}
                 name={currency}
                 onChange={() => console.log('')}
