@@ -1,5 +1,6 @@
 {
   "ExchangeBlock": {
-    "currencyRateText": "%currencyTo%1 = %currencyFrom%"
+    "currencyRateText": "%currencyTo%1 = %currencyFrom%",
+    "balanceText": "You have %balance% %currency%"
   }
 }

@@ -55,4 +55,4 @@ export const updateRatesForCurrency = (currency: Currency) => (dispatch: Dispatc
     })
     .catch(() => dispatch(ratesResponseError(currency)));
 };
-export type TRateAction = RatesRequestAction | RatesResponseErrorAction | RatesResponseSuccessAction;
+export type RateAction = RatesRequestAction | RatesResponseErrorAction | RatesResponseSuccessAction;

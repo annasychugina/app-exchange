@@ -24,7 +24,7 @@ export const Slider: React.FC<Props> = ({currentSlide, children, onSlideChange})
   const sliderRef = useRef<SlickSlider>(null);
 
   return (
-    <SlickSlider {...defaultSettings} ref={sliderRef} initialSlide={currentSlide}>
+    <SlickSlider {...defaultSettings} ref={sliderRef} initialSlide={currentSlide} afterChange={onSlideChange}>
       {children.map(
         (slide: ReactNode, index: number): React.ReactElement => {
           return (

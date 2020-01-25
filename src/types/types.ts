@@ -1,15 +1,9 @@
-import {SyntheticEvent} from 'react';
+import {VariantType} from 'notistack';
+
 export type Currency = 'RUB' | 'USD' | 'EUR' | 'GBP';
 export type SymbolCurrency = '$' | '€' | '£' | '₽';
-export interface FormFieldCallback {
-  (
-    e: SyntheticEvent<HTMLElement> | null,
-    obj: {
-      value: string;
-      name: string;
-    },
-  ): void;
-}
+
+export type FieldInputCallback = (floatValue: number, fieldName: string) => void;
 
 export enum CurrencyBlockType {
   currencyFrom = 'currencyFrom',
@@ -20,11 +14,20 @@ export type RatesState = {
   [key in Currency]?: number;
 };
 
-export interface GlobalState {
-  rates: RatesState;
+export type NotificationState = Array<NotificationPayload> | [];
+export interface NotificationPayload {
+  text: string;
+  variant: VariantType;
 }
 
-export interface FormState {
-  currencyTo?: number | null;
-  currencyFrom?: number | null;
+export interface GlobalState {
+  rates: RatesState;
+  userBalance: CurrentBalanceConfig;
+  notifications: Array<NotificationPayload> | [];
 }
+
+export type InputValueState = number | null;
+
+export type CurrentBalanceConfig = {
+  [key in Currency]: number;
+};

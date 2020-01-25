@@ -1,49 +1,41 @@
-import React, {useRef, useEffect, useCallback} from 'react';
+import React, {useCallback} from 'react';
 import NumberFormat from 'react-number-format';
-import s from './formatted-input.module.css';
-import {CurrencyBlockType} from '../../types/types';
+import {CurrencyBlockType, FieldInputCallback} from '../../types/types';
 
-export type FieldInputCallback = (floatValue: number, fieldName: string) => void;
+import s from './formatted-input.module.css';
 
 type Props = {
   name: CurrencyBlockType;
-  value?: string;
-  focused?: boolean;
+  inputValue?: string;
   prefix: string;
   onChange: FieldInputCallback;
 };
 export const FormattedInput: React.FC<Props> = ({
-  focused = true,
   onChange,
   prefix,
-  value = '',
+  inputValue = '',
   name,
 }: Props): React.ReactElement => {
-  // TODO
-  // const inputRef = useRef<HTMLInputElement>(null);
-  // useEffect(() => {
-  //   console.log('focused', focused)
-  //   focused && inputRef.current && inputRef.current.focus();
-  // }, [focused]);
-
   const handleChange = useCallback(
     ({value}: {value: string}) => {
-      const normalizedValue = value.slice(prefix.length);
-      onChange(+normalizedValue, name);
+      const normalizedValue = prefix === '-' ? value.slice(1) : value;
+      const propsValue = inputValue ? +inputValue : 0;
+
+      if (+normalizedValue !== propsValue) {
+        onChange(+normalizedValue, name);
+      }
     },
-    [onChange, name],
+    [onChange, name, prefix, inputValue],
   );
 
   return (
     <NumberFormat
-      autoFocus={name === CurrencyBlockType.currencyFrom}
       className={s.input}
-      //getInputRef={inputRef}
       allowNegative={false}
       maxLength={16}
       name={name}
       prefix={prefix}
-      value={value}
+      value={inputValue}
       thousandSeparator={' '}
       autoComplete={'off'}
       onValueChange={handleChange}

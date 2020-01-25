@@ -8,7 +8,7 @@ type Props = {
   disabled?: boolean;
   className?: string;
   children: any;
-  onClick: () => void;
+  onClick: (e: React.SyntheticEvent<HTMLElement> | null) => void;
   hasLoader?: boolean;
   type?: string;
 };

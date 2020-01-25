@@ -1,7 +1,7 @@
-import {ActionType, TRateAction} from '../../actions/updateRates';
+import {ActionType, RateAction} from '../../actions/updateRates';
 import {RatesState} from '../../types/types';
 
-export const ratesReducer = (state: RatesState = {}, action: TRateAction): RatesState => {
+export const ratesReducer = (state: RatesState = {}, action: RateAction): RatesState => {
   switch (action.type) {
     case ActionType.RATES_REQUEST: {
       const {currency} = action.payload;

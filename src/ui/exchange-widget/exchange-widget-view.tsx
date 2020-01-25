@@ -1,6 +1,5 @@
 import React from 'react';
-import {Currency, CurrencyBlockType, FormState} from '../../types/types';
-import {FieldInputCallback} from '../formatted-input/formatted-input';
+import {Currency, CurrencyBlockType, FieldInputCallback, InputValueState} from '../../types/types';
 import {ExchangeBlock} from '../exchange-block/exchange-block';
 import {CURRENCIES} from '../../constants/currency';
 import {Button} from '../button/button';
@@ -11,13 +10,16 @@ import s from './exchange-widget-view.module.css';
 interface Props {
   currencyFrom: Currency;
   currencyTo: Currency;
+  balanceFrom: number;
+  balanceTo: number;
   handleCurrencyFromChange: (currency: Currency) => void;
   handleCurrencyToChange: (currency: Currency) => void;
   handleCurrencyValueChange: FieldInputCallback;
+  handleExchange: (e: React.SyntheticEvent<HTMLElement> | null) => void;
   rate: number;
   isRateLoading: boolean;
-  valueFrom?: FormState['currencyFrom'];
-  valueTo?: FormState['currencyFrom'];
+  valueFrom?: InputValueState;
+  valueTo?: InputValueState;
 }
 
 export const ExchangeWidgetView: React.FC<Props> = ({
@@ -26,18 +28,20 @@ export const ExchangeWidgetView: React.FC<Props> = ({
   handleCurrencyFromChange,
   handleCurrencyToChange,
   handleCurrencyValueChange,
+  handleExchange,
   rate,
   valueFrom,
   valueTo,
   isRateLoading,
+  balanceFrom,
+  balanceTo,
 }) => {
   return (
     <section className={s.root}>
       <div className={s.content}>
         <ExchangeBlock
-          onCurrencyChange={currency => {
-            handleCurrencyFromChange(currency);
-          }}
+          balance={balanceFrom}
+          onCurrencyChange={currency => handleCurrencyFromChange(currency)}
           currencyTo={currencyTo}
           currencyFrom={currencyFrom}
           type={CurrencyBlockType.currencyFrom}
@@ -47,9 +51,8 @@ export const ExchangeWidgetView: React.FC<Props> = ({
         />
         <ExchangeBlock
           rate={rate}
-          onCurrencyChange={currency => {
-            handleCurrencyToChange(currency);
-          }}
+          balance={balanceTo}
+          onCurrencyChange={currency => handleCurrencyToChange(currency)}
           currencyTo={currencyTo}
           currencyFrom={currencyFrom}
           type={CurrencyBlockType.currencyTo}
@@ -58,12 +61,7 @@ export const ExchangeWidgetView: React.FC<Props> = ({
           inputValue={String(valueTo)}
         />
       </div>
-      <Button
-        type="submit"
-        className={s.submitBtn}
-        onClick={() => console.log('click')}
-        title={resources.ExchangeWidget.buttonTitle}
-      >
+      <Button className={s.submitBtn} onClick={handleExchange} title={resources.ExchangeWidget.buttonTitle}>
         {resources.ExchangeWidget.buttonText}
       </Button>
     </section>
