@@ -15,7 +15,7 @@ interface Props {
   inputValue: string;
   type: CurrencyBlockType;
   onCurrencyChange: (currency: Currency) => void;
-  onCurrencyValueChange: FieldInputCallback
+  onCurrencyValueChange: FieldInputCallback;
   currencyItems: Array<Currency>;
 }
 
@@ -27,23 +27,20 @@ export const ExchangeBlock: React.FC<Props> = ({
   onCurrencyChange,
   onCurrencyValueChange,
   type,
-  inputValue
+  inputValue,
 }) => {
   const [focused, setFocused] = useState(type === CurrencyBlockType.currencyFrom);
   const handleSlide = (index: number) => {
     const currency = CURRENCIES[index];
     onCurrencyChange(currency);
+    setFocused(true);
   };
-  const handleClick = () => {
-    setFocused(true)
-  };
-
   const currency = type === CurrencyBlockType.currencyTo ? currencyTo : currencyFrom;
   return (
     <div className={cn(s.root, s[`root_${type}`])}>
       <Slider onSlideChange={handleSlide} currentSlide={CURRENCIES.indexOf(currency)}>
         {CURRENCIES.map((currency, index) => (
-          <div key={currency} className={s.block} role="button" onClick={handleClick}>
+          <div key={currency} className={s.block}>
             <div className={s.row}>
               <p>{currency}</p>
               <FormattedInput

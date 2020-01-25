@@ -17,27 +17,22 @@ const defaultSettings: Settings = {
   dots: true,
   arrows: true,
   infinite: false,
-  speed: 260
+  speed: 260,
 };
 
 export const Slider: React.FC<Props> = ({currentSlide, children, onSlideChange}) => {
   const sliderRef = useRef<SlickSlider>(null);
 
-  // const afterMainSliderChange = (_oldIndex: number, newIndex: number) => {
-  //   sliderRef.current && sliderRef.current.slickGoTo(newIndex);
-  // };
   return (
-    <SlickSlider
-      {...defaultSettings}
-      ref={sliderRef}
-      initialSlide={1}
-    >
+    <SlickSlider {...defaultSettings} ref={sliderRef} initialSlide={currentSlide}>
       {children.map(
         (slide: ReactNode, index: number): React.ReactElement => {
-          return   <div className={s.slide} key={index}>
-            {slide}
-          </div>
-        }
+          return (
+            <div className={s.slide} key={index}>
+              {slide}
+            </div>
+          );
+        },
       )}
     </SlickSlider>
   );
