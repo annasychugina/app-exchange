@@ -31,3 +31,13 @@ export type InputValueState = number | null;
 export type CurrentBalanceConfig = {
   [key in Currency]: number;
 };
+
+export interface FormCurrencyState {
+  currencyFrom: number | null;
+  currencyTo: number | null;
+}
+
+export interface FormInitialCurrencyState {
+  currencyFrom: number | null;
+  currencyTo: number | null;
+}

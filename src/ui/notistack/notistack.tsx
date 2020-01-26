@@ -1,10 +1,11 @@
 import {useEffect} from 'react';
-import {withSnackbar, WithSnackbarProps} from 'notistack';
+import {useSnackbar} from 'notistack';
 import {useSelector, useDispatch, shallowEqual} from 'react-redux';
 import {resetNotifications} from '../../actions/notification';
 import {GlobalState} from '../../types/types';
 
-const NotistackBase = ({enqueueSnackbar, closeSnackbar}: WithSnackbarProps) => {
+export const Notistack = () => {
+  const {enqueueSnackbar, closeSnackbar} = useSnackbar();
   const notifications = useSelector((state: GlobalState) => state.notifications, shallowEqual);
 
   const dispatch = useDispatch();
@@ -21,5 +22,3 @@ const NotistackBase = ({enqueueSnackbar, closeSnackbar}: WithSnackbarProps) => {
 
   return null;
 };
-
-export const Notistack = withSnackbar(NotistackBase);

@@ -5,7 +5,7 @@ import {FormattedInput} from '../formatted-input/formatted-input';
 import {Slider} from '../slider/slider';
 import {CURRENCY_SYMBOL_MAP} from '../../constants/currency';
 import {resourcesTemplate} from '../../utils/resourcesTemplate';
-import {formattedRate} from '../../utils/formatters';
+import {formattedValue} from '../../utils/formatters';
 import resources from './config.json';
 
 import s from './exchange-block.module.css';
@@ -55,7 +55,7 @@ export const ExchangeBlock: React.FC<Props> = ({
               <p className={s.text}>
                 {' '}
                 {resourcesTemplate(resources.ExchangeBlock.balanceText, {
-                  balance: String(balance),
+                  balance: formattedValue(balance),
                   currency: CURRENCY_SYMBOL_MAP[currency],
                 })}
               </p>
@@ -65,7 +65,7 @@ export const ExchangeBlock: React.FC<Props> = ({
                 <p className={cn(s.text, s.text_rate)}>
                   {resourcesTemplate(resources.ExchangeBlock.currencyRateText, {
                     currencyTo: `${CURRENCY_SYMBOL_MAP[currencyTo]}`,
-                    currencyFrom: `${CURRENCY_SYMBOL_MAP[currencyFrom]}${formattedRate(rate)}`,
+                    currencyFrom: `${CURRENCY_SYMBOL_MAP[currencyFrom]}${formattedValue(rate)}`,
                   })}
                 </p>
               </div>

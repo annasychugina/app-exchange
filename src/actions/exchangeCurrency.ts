@@ -1,4 +1,4 @@
-import {Currency} from '../types/types';
+import {Currency, FormCurrencyState} from '../types/types';
 
 export enum ExchangeActionType {
   EXCHANGE_MONEY = 'EXCHANGE_MONEY',
@@ -6,8 +6,7 @@ export enum ExchangeActionType {
 interface ExchangeMoneyPayload {
   currencyFrom: Currency;
   currencyTo: Currency;
-  valueTo: number;
-  valueFrom: number;
+  form: FormCurrencyState;
 }
 interface ExchangeMoneyAction {
   payload: ExchangeMoneyPayload;

@@ -20,6 +20,7 @@ interface Props {
   isRateLoading: boolean;
   valueFrom?: InputValueState;
   valueTo?: InputValueState;
+  disabled: boolean;
 }
 
 export const ExchangeWidgetView: React.FC<Props> = ({
@@ -35,6 +36,7 @@ export const ExchangeWidgetView: React.FC<Props> = ({
   isRateLoading,
   balanceFrom,
   balanceTo,
+  disabled,
 }) => {
   return (
     <section className={s.root}>
@@ -61,7 +63,12 @@ export const ExchangeWidgetView: React.FC<Props> = ({
           inputValue={String(valueTo)}
         />
       </div>
-      <Button className={s.submitBtn} onClick={handleExchange} title={resources.ExchangeWidget.buttonTitle}>
+      <Button
+        disabled={disabled}
+        className={s.submitBtn}
+        onClick={handleExchange}
+        title={resources.ExchangeWidget.buttonTitle}
+      >
         {resources.ExchangeWidget.buttonText}
       </Button>
     </section>

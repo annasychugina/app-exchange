@@ -9,12 +9,15 @@ export const createExchangeReducer = (initialState: CurrentBalanceConfig): any =
     switch (action.type) {
       case ExchangeActionType.EXCHANGE_MONEY: {
         const {
-          payload: {currencyFrom, currencyTo, valueTo, valueFrom},
+          payload: {currencyFrom, currencyTo, form},
         } = action;
+        if (!form.currencyFrom || !form.currencyTo) {
+          return state;
+        }
         return {
           ...state,
-          [currencyFrom]: state[currencyFrom] - valueFrom,
-          [currencyTo]: state[currencyTo] + valueTo,
+          [currencyFrom]: state[currencyFrom] - form.currencyFrom,
+          [currencyTo]: state[currencyTo] + form.currencyTo,
         };
       }
 
