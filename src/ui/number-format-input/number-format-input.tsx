@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import NumberFormat from 'react-number-format';
 import {CurrencyBlockType, FieldInputCallback} from '../../types/types';
 

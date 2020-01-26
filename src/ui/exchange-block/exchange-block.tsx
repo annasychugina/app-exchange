@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import cn from 'classnames';
 import {Currency, CurrencyBlockType, FieldInputCallback} from '../../types/types';
 import {NumberFormatInput} from '../number-format-input/number-format-input';
@@ -45,7 +45,6 @@ export const ExchangeBlock: React.FC<Props> = ({
             <div className={s.row}>
               <p>{currency}</p>
               <NumberFormatInput
-                // inputRef={setInputRef(currency)}
                 prefix={type === CurrencyBlockType.currencyFrom ? '-' : '+'}
                 name={type}
                 inputValue={inputValue}

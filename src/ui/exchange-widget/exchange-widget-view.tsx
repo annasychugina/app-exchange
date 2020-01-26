@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Currency, CurrencyBlockType, FieldInputCallback, InputValueState} from '../../types/types';
 import {ExchangeBlock} from '../exchange-block/exchange-block';
 import {CURRENCIES, CURRENCY_SYMBOL_MAP} from '../../constants/currency';
