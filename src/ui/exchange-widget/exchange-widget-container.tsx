@@ -3,12 +3,13 @@ import {useSelector, shallowEqual} from 'react-redux';
 import {Currency, FormInitialCurrencyState, GlobalState} from '../../types/types';
 import {useDispatch} from 'react-redux';
 import {updateRatesForCurrency} from '../../actions/updateRates';
-import {CURRENCIES} from '../../constants/currency';
+import {CURRENCIES, UPDATE_RATES_DELAY} from '../../constants/currency';
 import {ExchangeWidgetView} from './exchange-widget-view';
 import {exchangeCurrency} from '../../actions/exchangeCurrency';
 import {addNotification} from '../../actions/notification';
 import {checkBalance} from '../../utils/validators';
 import {useCurrencyForm} from '../../hooks/useFormState';
+import {getCurrencyNextIndex} from '../../utils/getCurrencyNext';
 
 interface Props {}
 
@@ -26,15 +27,15 @@ export const ExchangeWidgetContainer: React.FC<Props> = () => {
       return;
     }
     dispatch(updateRatesForCurrency(currencyTo));
-    // function run() {
-    //   dispatch(updateRatesForCurrency(currencyTo));
-    //   setTimeout(run, UPDATE_RATES_DELAY);
-    // }
-    // const timerId = setTimeout(() => {
-    //   run();
-    // }, UPDATE_RATES_DELAY);
-    //
-    // return () => clearTimeout(timerId);
+    function run() {
+      dispatch(updateRatesForCurrency(currencyTo));
+      setTimeout(run, UPDATE_RATES_DELAY);
+    }
+    const timerId = setTimeout(() => {
+      run();
+    }, UPDATE_RATES_DELAY);
+
+    return () => clearTimeout(timerId);
   }, [currencyTo, currencyFrom, dispatch]);
 
   const rates = useSelector((state: GlobalState) => state.rates, shallowEqual);
@@ -65,12 +66,26 @@ export const ExchangeWidgetContainer: React.FC<Props> = () => {
     }
   }, [success, submitting, dispatch, errorMessage]);
 
+  const setCurrencyNextIndex = (currentCurrency: Currency, prevCurrency: Currency) => {
+    const currentIndex = CURRENCIES.indexOf(currentCurrency);
+    const prevIndex = CURRENCIES.indexOf(prevCurrency);
+    return getCurrencyNextIndex({currentIndex, prevIndex});
+  };
+
   const handleCurrencyFromChange = (currency: Currency): void => {
     setCurrencyFrom(currency);
+    if (currency === currencyTo) {
+      const index = setCurrencyNextIndex(currencyTo, currency);
+      setCurrencyTo(CURRENCIES[index]);
+    }
   };
 
   const handleCurrencyToChange = (currency: Currency): void => {
     setCurrencyTo(currency);
+    if (currency === currencyFrom) {
+      const index = setCurrencyNextIndex(currencyFrom, currency);
+      setCurrencyFrom(CURRENCIES[index]);
+    }
   };
 
   return (
@@ -87,7 +102,7 @@ export const ExchangeWidgetContainer: React.FC<Props> = () => {
       isRateLoading={Boolean(currencyToRates) && currencyToRates.loading}
       rate={currencyFromRate}
       handleExchange={handleExchange}
-      disabled={!form.currencyFrom || !form.currencyTo}
+      isExchangeButtonDisabled={!form.currencyFrom || !form.currencyTo}
     />
   );
 };

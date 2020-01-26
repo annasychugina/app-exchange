@@ -1,4 +1,4 @@
-import React, {ReactNode, useRef} from 'react';
+import React, {ReactNode, useRef, useEffect} from 'react';
 import SlickSlider, {Settings} from 'react-slick';
 
 import 'slick-carousel/slick/slick.css';
@@ -20,8 +20,11 @@ const defaultSettings: Settings = {
   speed: 260,
 };
 
-export const Slider: React.FC<Props> = ({currentSlide, children, onSlideChange}) => {
+export const Slider: React.FC<Props> = ({currentSlide, children, onSlideChange}: Props) => {
   const sliderRef = useRef<SlickSlider>(null);
+  useEffect(() => {
+    sliderRef.current && sliderRef.current.slickGoTo(currentSlide);
+  }, [currentSlide]);
 
   return (
     <SlickSlider {...defaultSettings} ref={sliderRef} initialSlide={currentSlide} afterChange={onSlideChange}>

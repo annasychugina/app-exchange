@@ -2,7 +2,7 @@ import React, {useCallback} from 'react';
 import NumberFormat from 'react-number-format';
 import {CurrencyBlockType, FieldInputCallback} from '../../types/types';
 
-import s from './formatted-input.module.css';
+import s from './number-format-input.module.css';
 
 type Props = {
   name: CurrencyBlockType;
@@ -10,7 +10,7 @@ type Props = {
   prefix: string;
   onChange: FieldInputCallback;
 };
-export const FormattedInput: React.FC<Props> = ({
+export const NumberFormatInput: React.FC<Props> = ({
   onChange,
   prefix,
   inputValue = '',
