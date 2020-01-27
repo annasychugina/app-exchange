@@ -18,8 +18,6 @@ Use jest & enzyme & @testing-library/react-hooks
 yarn test
 ```
 
-I use react-app-rewired because I should patch webpack config (see config-overrides.js)
-
 https://github.com/timarney/react-app-rewired
 
 ## Check ts
@@ -27,3 +25,7 @@ https://github.com/timarney/react-app-rewired
 ```
 yarn typecheck
 ```
+
+Use react-app-rewired because I should patch only webpack config (see config-overrides.js)
+
+(https://github.com/timarney/react-app-rewired)
