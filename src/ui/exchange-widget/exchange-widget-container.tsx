@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useSelector, shallowEqual} from 'react-redux';
 import {Currency, FormInitialCurrencyState, GlobalState} from '../../types/types';
 import {useDispatch} from 'react-redux';
@@ -20,23 +20,26 @@ const initialFormValues: FormInitialCurrencyState = {
 
 export const ExchangeWidgetContainer: React.FC<Props> = () => {
   const dispatch = useDispatch();
+  const timerRef = useRef<{timerId?:number}>({});
   const [currencyFrom, setCurrencyFrom] = useState<Currency>(CURRENCIES[0]);
   const [currencyTo, setCurrencyTo] = useState<Currency>(CURRENCIES[2]);
   useEffect(() => {
-    if (currencyTo === currencyFrom) {
-      return;
-    }
-    dispatch(updateRatesForCurrency(currencyTo));
-    function run() {
-      dispatch(updateRatesForCurrency(currencyTo));
-      setTimeout(run, UPDATE_RATES_DELAY);
-    }
-    const timerId = setTimeout(() => {
-      run();
-    }, UPDATE_RATES_DELAY);
+    const timer = timerRef.current;
+    const updateRatesWithInterval = () => {
+      if (timer.timerId) {
+        clearTimeout(timer.timerId);
+      }
 
-    return () => clearTimeout(timerId);
-  }, [currencyTo, currencyFrom, dispatch]);
+    dispatch(updateRatesForCurrency(currencyTo));
+      timer.timerId = setTimeout(() => {
+        updateRatesWithInterval();
+    }, UPDATE_RATES_DELAY) as unknown as number;
+  };
+
+    updateRatesWithInterval();
+
+    return () => clearTimeout(timer.timerId);
+  }, [currencyTo,  dispatch]);
 
   const rates = useSelector((state: GlobalState) => state.rates, shallowEqual);
   const userBalance = useSelector((state: GlobalState) => state.userBalance, shallowEqual);
