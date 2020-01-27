@@ -16,8 +16,8 @@ globals:
   Data: true
 rules:
   no-debugger: ["error"]
-  no-restricted-globals: [2, "localStorage", "sessionStorage"]
   no-console: ["warn"]
+  no-restricted-globals: [2, "localStorage", "sessionStorage"]
   no-useless-computed-key: ["off"]
   no-unneeded-ternary: ["warn", {
     "defaultAssignment": false
@@ -49,5 +49,4 @@ overrides:
       react/jsx-no-literals: ["off"]
   - files: ["*.ts"]
     rules:
-      no-console: ["off"]
       "@typescript-eslint/no-var-requires": ["off"]

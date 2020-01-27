@@ -42,7 +42,6 @@ export const ExchangeWidgetContainer: React.FC<Props> = () => {
 
   const currencyFromRate = currencyToRates && currencyToRates.loaded && currencyToRates.rates[currencyFrom];
 
-  console.log('currencyFromRate', currencyFromRate)
   const {form, handleChange, handleExchange} = useCurrencyFormState(
     {success: handleSuccessSubmit, error: handleErrorSubmit},
     validateOnSubmit,

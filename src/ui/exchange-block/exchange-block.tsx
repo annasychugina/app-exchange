@@ -33,12 +33,11 @@ export const ExchangeBlock: React.FC<Props> = ({
   inputValue,
   balance,
   currencyAmountStr,
-  isRateLoading= false
+  isRateLoading = false,
 }) => {
   const handleSlide = (index: number): void => {
     onCurrencyChange(currencyItems[index]);
   };
-  console.log('rate', rate)
   return (
     <div className={cn(s.root, s[`root_${type}`])}>
       <Slider onSlideChange={handleSlide} currentSlide={currencyItems.indexOf(currency)}>
