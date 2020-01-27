@@ -32,7 +32,8 @@ export const NumberFormatInput: React.FC<Props> = ({
     <NumberFormat
       className={s.input}
       allowNegative={false}
-      maxLength={16}
+      decimalScale={2}
+      maxLength={12}
       name={name}
       prefix={prefix}
       value={inputValue}

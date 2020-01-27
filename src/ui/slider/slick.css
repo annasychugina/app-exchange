@@ -17,29 +17,24 @@
 }
 
 .slick-dots li button:before {
-  font-size: 9px;
+  font-size: 8px;
   color: white;
 }
 
 .slick-dots li.slick-active button:before {
-  opacity: 0.85;
   color: white;
+  opacity: 0.85;
 }
 
 .slick-dots li {
-  margin: -1px;
+  margin: -3px;
 }
 
 .slide-enter {
-  height: 0px;
+  height: 0;
   opacity: 0;
 }
 
-.slide-enter.slide-enter-active {
-  height: 75px;
-  opacity: 1;
-  transition: height 300ms ease-out, opacity 300ms ease;
-}
 .slide-leave {
   opacity: 1;
 }

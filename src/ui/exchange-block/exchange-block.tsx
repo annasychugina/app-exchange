@@ -3,7 +3,6 @@ import cn from 'classnames';
 import {Currency, CurrencyBlockType, FieldInputCallback} from '../../types/types';
 import {NumberFormatInput} from '../number-format-input/number-format-input';
 import {Slider} from '../slider/slider';
-import {CURRENCY_SYMBOL_MAP} from '../../constants/currency';
 import {resourcesTemplate} from '../../utils/resourcesTemplate';
 import {formattedValue} from '../../utils/formatters';
 import {parseMoney} from '../../utils/parseMoney';
