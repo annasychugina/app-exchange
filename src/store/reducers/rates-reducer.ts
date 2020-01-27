@@ -9,7 +9,6 @@ export const ratesReducer = (state: RatesState = {}, action: RateAction): RatesS
       return {
         ...state,
         [currency]: {
-          // @ts-ignore
           ...state[currency],
           loading: true,
         },
@@ -17,12 +16,10 @@ export const ratesReducer = (state: RatesState = {}, action: RateAction): RatesS
     }
 
     case ActionType.RATES_RESPONSE_SUCCESS: {
-      // @ts-ignore
       const {currency, rates} = action.payload;
       return {
         ...state,
         [currency]: {
-          // @ts-ignore
           ...state[currency],
           rates,
           loaded: true,
@@ -36,7 +33,6 @@ export const ratesReducer = (state: RatesState = {}, action: RateAction): RatesS
       return {
         ...state,
         [currency]: {
-          // @ts-ignore
           ...state[currency],
           loading: false,
         },

@@ -11,13 +11,13 @@ export interface ApiRatesResponse {
   rates: Rate;
 }
 
-const ratesApiUrl = 'https://api.exchangeratesapi.io/latest';
+export const ratesApiUrl = 'https://api.exchangeratesapi.io/latest';
 
 // see https://exchangeratesapi.io
-export const getRates = (currency: Currency): Promise<any> => {
+export const getRates = (currency: Currency): Promise<ApiRatesResponse> => {
   return axios.get(ratesApiUrl, {params: {base: currency}}).then(response => {
     if (response.status !== 200) {
-      throw response;
+      throw new Error('Error request exchangeratesapi');
     }
     return response.data;
   });

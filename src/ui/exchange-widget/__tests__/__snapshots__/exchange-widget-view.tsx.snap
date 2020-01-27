@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<section
+  className="root"
+>
+  <div
+    className="content"
+  >
+    <ExchangeBlock
+      balance={230}
+      currency="RUB"
+      currencyAmountStr="$1 = ₽1.2"
+      currencyItems={
+        Array [
+          "RUB",
+          "USD",
+          "EUR",
+          "GBP",
+        ]
+      }
+      inputValue="12"
+      onCurrencyChange={[Function]}
+      onCurrencyValueChange={[Function]}
+      type="currencyFrom"
+    />
+    <ExchangeBlock
+      balance={120}
+      currency="USD"
+      currencyAmountStr="$1 = ₽1.2"
+      currencyItems={
+        Array [
+          "RUB",
+          "USD",
+          "EUR",
+          "GBP",
+        ]
+      }
+      inputValue="10"
+      onCurrencyChange={[Function]}
+      onCurrencyValueChange={[Function]}
+      rate={1.2}
+      type="currencyTo"
+    />
+  </div>
+  <Button
+    className="submitBtn"
+    disabled={true}
+    onClick={[Function]}
+    title="Exchange"
+  >
+    Exchange
+  </Button>
+</section>
+`;

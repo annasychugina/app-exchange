@@ -9,9 +9,16 @@ export enum CurrencyBlockType {
   currencyFrom = 'currencyFrom',
   currencyTo = 'currencyTo',
 }
+export type Rate = {
+  [key in Currency]: number;
+};
 
 export type RatesState = {
-  [key in Currency]?: number;
+  [key in Currency]?: {
+    loading: boolean;
+    loaded?: boolean;
+    rates: Rate;
+  };
 };
 
 export type NotificationState = Array<NotificationPayload> | [];
@@ -20,6 +27,10 @@ export interface NotificationPayload {
   variant: VariantType;
 }
 
+export type CurrentBalanceConfig = {
+  [key in string]: number;
+};
+
 export interface GlobalState {
   rates: RatesState;
   userBalance: CurrentBalanceConfig;
@@ -27,10 +38,6 @@ export interface GlobalState {
 }
 
 export type InputValueState = number | null;
-
-export type CurrentBalanceConfig = {
-  [key in Currency]: number;
-};
 
 export interface FormCurrencyState {
   currencyFrom: number | null;

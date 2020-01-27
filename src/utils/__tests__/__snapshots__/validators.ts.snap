@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`validators: checkBalance 1`] = `
+Object {
+  "errorMessage": "No values for exchange",
+  "isValid": false,
+}
+`;
+
+exports[`validators: checkBalance 2`] = `
+Object {
+  "errorMessage": "You do not have enough money in your account",
+  "isValid": false,
+}
+`;
+
+exports[`validators: checkBalance 3`] = `
+Object {
+  "isValid": true,
+}
+`;

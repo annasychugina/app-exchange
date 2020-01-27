@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Exchange Reducer handle Exchange money action 1`] = `
+Object {
+  "EUR": 200,
+  "GBP": 20,
+  "RUB": 100020.2,
+  "USD": 105.19999999999999,
+}
+`;

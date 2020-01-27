@@ -10,8 +10,6 @@ export interface NotificationAction {
   type: NotificationActionType;
 }
 
-export type ActionType = NotificationActionType;
-
 export const addNotification = (payload: Array<NotificationPayload>): NotificationAction => {
   return {
     type: NotificationActionType.ADD_NOTIFICATION,

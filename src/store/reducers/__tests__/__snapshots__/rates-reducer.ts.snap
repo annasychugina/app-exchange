@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Rates Reducer RATES_REQUEST action 1`] = `
+Object {
+  "RUB": Object {
+    "loading": true,
+  },
+}
+`;
+
+exports[`Rates Reducer RATES_REQUEST action 2`] = `
+Object {
+  "RUB": Object {
+    "loading": true,
+  },
+  "USD": Object {
+    "loading": false,
+  },
+}
+`;
+
+exports[`Rates Reducer RATES_RESPONSE_ERROR Action 1`] = `
+Object {
+  "RUB": Object {
+    "loading": false,
+  },
+}
+`;
+
+exports[`Rates Reducer RATES_RESPONSE_SUCCESS action 1`] = `
+Object {
+  "USD": Object {
+    "loaded": true,
+    "loading": false,
+    "rates": Object {
+      "EUR": 1,
+      "RUB": 1.5,
+    },
+  },
+}
+`;

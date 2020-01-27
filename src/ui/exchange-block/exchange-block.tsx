@@ -9,6 +9,7 @@ import {formattedValue} from '../../utils/formatters';
 import resources from './config.json';
 
 import s from './exchange-block.module.css';
+import {parseMoney} from '../../utils/parseMoney';
 
 interface Props {
   currency: Currency;
@@ -55,7 +56,7 @@ export const ExchangeBlock: React.FC<Props> = ({
               <p className={s.text}>
                 {' '}
                 {resourcesTemplate(resources.ExchangeBlock.balanceText, {
-                  balance: formattedValue(balance),
+                  balance: parseMoney(currency, formattedValue(balance)),
                   currency: CURRENCY_SYMBOL_MAP[currency],
                 })}
               </p>

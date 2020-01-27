@@ -1,1 +1,1 @@
-export const formattedValue = (rate: number): string => String(Math.round(rate * 100) / 100);
+export const formattedValue = (rate: number): number => Math.round(rate * 100) / 100;

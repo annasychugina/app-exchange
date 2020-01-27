@@ -10,7 +10,7 @@ export interface ValidateCallback {
   (): {isValid: boolean; errorMessage?: string};
 }
 
-export const useCurrencyForm = (
+export const useFormCurrencyState = (
   handleSubmitCallback: SubmitCallback,
   validateOnSubmitCallback: ValidateCallback,
   initialFormValues: FormInitialCurrencyState,
@@ -80,5 +80,6 @@ export const useCurrencyForm = (
     errorMessage,
     submitting,
     success,
+    updateFieldName
   };
 };

@@ -1,5 +1,5 @@
 {
   "ExchangeBlock": {
-    "balanceText": "You have %balance% %currency%"
+    "balanceText": "You have %balance%"
   }
 }

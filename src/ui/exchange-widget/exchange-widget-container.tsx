@@ -8,8 +8,8 @@ import {ExchangeWidgetView} from './exchange-widget-view';
 import {exchangeCurrency} from '../../actions/exchangeCurrency';
 import {addNotification} from '../../actions/notification';
 import {checkBalance} from '../../utils/validators';
-import {useCurrencyForm} from '../../hooks/useFormState';
-import {getCurrencyNextIndex} from '../../utils/getCurrencyNext';
+import {useFormCurrencyState} from '../../hooks/useFormCurrencyState';
+import {getCurrencyNextIndex} from '../../utils/getCurrencyNextIndex';
 
 interface Props {}
 
@@ -50,7 +50,7 @@ export const ExchangeWidgetContainer: React.FC<Props> = () => {
     dispatch(exchangeCurrency({currencyFrom, currencyTo, form}));
   };
 
-  const {form, success, submitting, errorMessage, handleChange, handleExchange} = useCurrencyForm(
+  const {form, success, submitting, errorMessage, handleChange, handleExchange} = useFormCurrencyState(
     handleExchangeCallBack,
     validateOnSubmit,
     initialFormValues,
