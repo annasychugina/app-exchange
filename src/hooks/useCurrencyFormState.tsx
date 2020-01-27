@@ -1,17 +1,24 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {CurrencyBlockType, FormInitialCurrencyState} from '../types/types';
 import {normalizeCurrencyValue} from '../utils/normalizers';
 
-export interface SubmitCallback {
+export interface SubmitSuccessCallback {
   (e: React.SyntheticEvent<HTMLElement, Event> | null): void;
+}
+
+export interface SubmitErrorCallback {
+  (e: React.SyntheticEvent<HTMLElement, Event> | null, errorMessage: string): void;
 }
 
 export interface ValidateCallback {
   (): {isValid: boolean; errorMessage?: string};
 }
 
-export const useFormCurrencyState = (
-  handleSubmitCallback: SubmitCallback,
+export const useCurrencyFormState = (
+  submitCallbacks: {
+    success: SubmitSuccessCallback;
+    error: SubmitErrorCallback;
+  },
   validateOnSubmitCallback: ValidateCallback,
   initialFormValues: FormInitialCurrencyState,
   rate: number,
@@ -37,49 +44,56 @@ export const useFormCurrencyState = (
     const name =
       updateFieldName === CurrencyBlockType.currencyFrom
         ? CurrencyBlockType.currencyTo
-        : updateFieldName === CurrencyBlockType.currencyFrom;
+        : CurrencyBlockType.currencyFrom;
 
     setForm(state => {
       return {...state, [name as string]: normalizedCurrencyValue};
     });
   }, [updateFieldName, rate, form.currencyFrom, form.currencyTo]);
 
-  const validateOnSubmit = (): string | undefined => {
+  const validateOnSubmit = useCallback((): string | undefined => {
     const {isValid, errorMessage = ''} = validateOnSubmitCallback();
     if (!isValid) {
       setError(errorMessage);
       return errorMessage;
     }
-  };
+  }, [validateOnSubmitCallback]);
 
-  const handleChange = (floatValue: number, name: string): void => {
+  const handleChange = useCallback((floatValue: number, name: string) => {
+    setUpdateFieldName(name);
     setForm(state => {
       return {...state, [name]: floatValue};
     });
-    setUpdateFieldName(name);
-  };
+  }, []);
 
-  const handleExchange = (e: React.SyntheticEvent<HTMLElement, Event> | null) => {
-    const errorMessage = validateOnSubmit();
+  const handleExchange = useCallback(
+    (e: React.SyntheticEvent<HTMLElement, Event> | null) => {
+      const errorMessage = validateOnSubmit();
 
-    if (!errorMessage) {
-      setSubmitting(false);
-      handleSubmitCallback(e);
-      setSuccess(true);
-    } else {
-      setSubmitting(false);
-      setSuccess(false);
-    }
-  };
+      if (!errorMessage) {
+        setSubmitting(false);
+        submitCallbacks.success(e);
+        setSuccess(true);
+      } else {
+        setSubmitting(false);
+        submitCallbacks.error(e, errorMessage);
+        setSuccess(false);
+      }
+    },
+    [validateOnSubmit, submitCallbacks],
+  );
 
-  return {
-    handleChange,
-    handleExchange,
-    setForm,
-    form,
-    errorMessage,
-    submitting,
-    success,
-    updateFieldName,
-  };
+  return useMemo(
+    () => ({
+      handleChange,
+      handleExchange,
+      setForm,
+      form,
+      errorMessage,
+      submitting,
+      success,
+      updateFieldName,
+    }),
+    [handleChange, handleExchange, errorMessage, success, form, updateFieldName, submitting],
+  );
 };

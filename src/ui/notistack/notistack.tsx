@@ -4,7 +4,7 @@ import {useSelector, useDispatch, shallowEqual} from 'react-redux';
 import {resetNotifications} from '../../actions/notification';
 import {GlobalState} from '../../types/types';
 
-export const Notistack = () => {
+export const Notistack = (): null => {
   const {enqueueSnackbar, closeSnackbar} = useSnackbar();
   const notifications = useSelector((state: GlobalState) => state.notifications, shallowEqual);
 

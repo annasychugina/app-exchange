@@ -1,11 +1,8 @@
-import {useFormCurrencyState} from '../useFormCurrencyState';
+import {useCurrencyFormState} from '../useCurrencyFormState';
 import {act, renderHook} from '@testing-library/react-hooks';
 import {FormInitialCurrencyState} from '../../types/types';
 
-const handleSubmitCallback = jest.fn();
-const validateOnSubmitCallback = jest.fn();
-
-const validateWithError = () => {
+const validateIsNoValid = () => {
   return {isValid: false, errorMessage: 'error'};
 };
 
@@ -16,10 +13,6 @@ const validateIsValid = () => {
 beforeEach(async () => {
   jest.setTimeout(1000);
 });
-afterEach(() => {
-  handleSubmitCallback.mockClear();
-  validateOnSubmitCallback.mockClear();
-});
 
 describe('useFormCurrencyState', () => {
   const initialFormValues: FormInitialCurrencyState = {
@@ -29,14 +22,7 @@ describe('useFormCurrencyState', () => {
 
   it('should return state object', () => {
     const {result} = renderHook(() =>
-      useFormCurrencyState(
-        () => {},
-        () => {
-          return {isValid: true};
-        },
-        initialFormValues,
-        12,
-      ),
+      useCurrencyFormState({success: () => {}, error: () => {}}, validateIsValid, initialFormValues, 12),
     );
 
     expect(result.current.form).toEqual(initialFormValues);
@@ -44,16 +30,9 @@ describe('useFormCurrencyState', () => {
     expect(result.current.success).toBe(false);
   });
 
-  it('should update when onChange', done => {
+  it('should update when onChange currencyFrom', done => {
     const {result, waitForNextUpdate} = renderHook(() =>
-      useFormCurrencyState(
-        () => {},
-        () => {
-          return {isValid: true};
-        },
-        initialFormValues,
-        12,
-      ),
+      useCurrencyFormState({success: () => {}, error: () => {}}, validateIsValid, initialFormValues, 12),
     );
 
     // @see issue https://github.com/testing-library/react-hooks-testing-library/issues/14
@@ -72,16 +51,45 @@ describe('useFormCurrencyState', () => {
     });
   });
 
+  it('should update when onChange currencyTo', done => {
+    const {result, waitForNextUpdate} = renderHook(() =>
+      useCurrencyFormState({success: () => {}, error: () => {}}, validateIsValid, initialFormValues, 12),
+    );
+
+    // @see issue https://github.com/testing-library/react-hooks-testing-library/issues/14
+    // warning  " Warning: You seem to have overlapping act() calls, this is not supported. Be sure to await previous act() calls before making a new one"
+    // when run tests
+    act(() => {
+      result.current.handleChange(124, 'currencyTo');
+      waitForNextUpdate().then(() => {
+        expect(result.current.form).toEqual({
+          currencyFrom: 1488,
+          currencyTo: 124,
+        });
+        expect(result.current.updateFieldName).toBe('currencyTo');
+        done();
+      });
+    });
+  });
+
   it('No handleExchange values if form has errors', () => {
     const e = jest.fn();
+    const spyHandleSubmitCallback = jest.fn();
+    const spyErrorCallback = jest.fn();
     const {result, waitForNextUpdate} = renderHook(() =>
-      useFormCurrencyState(handleSubmitCallback, validateWithError, initialFormValues, 12),
+      useCurrencyFormState(
+        {success: spyHandleSubmitCallback, error: spyErrorCallback},
+        validateIsNoValid,
+        initialFormValues,
+        12,
+      ),
     );
 
     act(() => {
-      result.current.handleExchange(e);
+      result.current.handleExchange(e as any);
       waitForNextUpdate().then(() => {
-        expect(handleSubmitCallback).not.toHaveBeenCalled();
+        expect(spyHandleSubmitCallback).not.toHaveBeenCalled();
+        expect(spyErrorCallback).toBeCalledTimes(1);
         expect(result.current.errorMessage).toBe('error');
       });
     });
@@ -89,13 +97,15 @@ describe('useFormCurrencyState', () => {
 
   it('handleExchange success', () => {
     const e = jest.fn();
+    const spyHandleSubmitCallback = jest.fn();
     const {result, waitForNextUpdate} = renderHook(() =>
-      useFormCurrencyState(handleSubmitCallback, validateIsValid, initialFormValues, 12),
+      useCurrencyFormState({success: spyHandleSubmitCallback, error: () => {}}, validateIsValid, initialFormValues, 12),
     );
 
     act(() => {
-      result.current.handleExchange(e);
+      result.current.handleExchange(e as any);
       waitForNextUpdate().then(() => {
+        expect(spyHandleSubmitCallback).toBeCalledTimes(1);
         expect(result.current.success).toBe(true);
       });
     });

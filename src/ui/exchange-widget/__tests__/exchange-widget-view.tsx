@@ -38,10 +38,10 @@ it('calls onCurrencyValueChange first ExchangeBlock', () => {
   rows
     .at(0)
     .props()
-    .onCurrencyValueChange('34');
+    .onCurrencyValueChange(35, 'currencyFrom');
 
   expect(onCurrencyValueChange).toBeCalledTimes(1);
-  expect(onCurrencyValueChange).toHaveBeenLastCalledWith('34');
+  expect(onCurrencyValueChange).toHaveBeenLastCalledWith(35, 'currencyFrom');
 });
 
 it('calls onCurrencyValueChange first ExchangeBlock', () => {
@@ -52,9 +52,9 @@ it('calls onCurrencyValueChange first ExchangeBlock', () => {
   blocks
     .at(1)
     .props()
-    .onCurrencyValueChange('34');
+    .onCurrencyValueChange(35, 'currencyFrom');
   expect(onCurrencyValueChange).toBeCalledTimes(1);
-  expect(onCurrencyValueChange).toHaveBeenLastCalledWith('34');
+  expect(onCurrencyValueChange).toHaveBeenLastCalledWith(35, 'currencyFrom');
 });
 
 it('disable button if prop isExchangeButtonDisabled', () => {
@@ -70,13 +70,14 @@ it('disable button if prop isExchangeButtonDisabled', () => {
 
 it('calls handleExchange when click button', () => {
   const onExchange = jest.fn();
+  const e = jest.fn();
   const wrapper = shallow(
     <ExchangeWidgetView {...mockProps} isExchangeButtonDisabled={false} handleExchange={onExchange} />,
   );
   const button = wrapper.find(Button);
   expect(button).toHaveLength(1);
   expect(button.props().onClick).toBeTruthy();
-  button.props().onClick!({});
+  button.props().onClick!(e as any);
   expect(onExchange).toBeCalledTimes(1);
 });
 

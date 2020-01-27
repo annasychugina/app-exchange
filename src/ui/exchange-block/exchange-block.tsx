@@ -7,7 +7,6 @@ import {CURRENCY_SYMBOL_MAP} from '../../constants/currency';
 import {resourcesTemplate} from '../../utils/resourcesTemplate';
 import {formattedValue} from '../../utils/formatters';
 import {parseMoney} from '../../utils/parseMoney';
-import {Preloader} from '../preloader/preloader';
 import resources from './config.json';
 
 import s from './exchange-block.module.css';
@@ -35,9 +34,8 @@ export const ExchangeBlock: React.FC<Props> = ({
   inputValue,
   balance,
   currencyAmountStr,
-  isRateLoading = false,
 }) => {
-  const handleSlide = (index: number) => {
+  const handleSlide = (index: number): void => {
     onCurrencyChange(currencyItems[index]);
   };
   return (
@@ -66,7 +64,7 @@ export const ExchangeBlock: React.FC<Props> = ({
             </div>
             {rate && type === CurrencyBlockType.currencyTo && (
               <div className={cn(s.row, s.row_rate)}>
-                {isRateLoading ? <Preloader /> : <p className={cn(s.text, s.text_rate)}>{currencyAmountStr}</p>}
+                <p className={cn(s.text, s.text_rate)}>{currencyAmountStr}</p>
               </div>
             )}
           </div>

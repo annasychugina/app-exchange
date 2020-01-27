@@ -11,6 +11,7 @@
     "pretty:json": "prettier --config .prettierrc.json --write \"src/**/*.json\"",
     "pretty": "run-p format:*",
     "lint:js": "eslint 'src/**/*.{ts,tsx,js}' --cache",
+    "lint:css": "stylelint \"src/ui/**/*.css\"",
     "typecheck": "tsc --project ./tsconfig.json --noEmit"
   },
   "dependencies": {
@@ -38,6 +39,8 @@
     "@testing-library/react-hooks": "^3.2.1",
     "@testing-library/user-event": "^7.1.2",
     "@types/classnames": "^2.2.9",
+    "@types/enzyme": "^3.10.4",
+    "@types/enzyme-adapter-react-16": "^1.0.5",
     "@types/jest": "^24.0.0",
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
@@ -56,6 +59,8 @@
     "react-scripts": "^3.3.0",
     "react-test-renderer": "^16.12.0",
     "redux-devtools-extension": "^2.13.8",
+    "stylelint": "^13.0.0",
+    "stylelint-config-standard": "^19.0.0",
     "typescript": "~3.7.2"
   },
   "husky": {

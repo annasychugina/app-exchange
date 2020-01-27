@@ -17,7 +17,7 @@ export const NumberFormatInput: React.FC<Props> = ({
   name,
 }: Props): React.ReactElement => {
   const handleChange = useCallback(
-    ({value}: {value: string}) => {
+    ({value}: {value: string}): void => {
       const normalizedValue = prefix === '-' ? value.slice(1) : value;
       const propsValue = inputValue ? +inputValue : 0;
 

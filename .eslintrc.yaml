@@ -47,10 +47,7 @@ overrides:
   - files: ["*.js"]
     rules:
       react/jsx-no-literals: ["off"]
-  - files: ["*.stories.*"]
-    rules:
-      react/jsx-no-literals: ["off"]
-  - files: ["*.js"]
+  - files: ["*.ts"]
     rules:
       no-console: ["off"]
       "@typescript-eslint/no-var-requires": ["off"]

@@ -8,7 +8,7 @@ import {ExchangeWidgetView} from './exchange-widget-view';
 import {exchangeCurrency} from '../../actions/exchangeCurrency';
 import {addNotification} from '../../actions/notification';
 import {checkBalance} from '../../utils/validators';
-import {useFormCurrencyState} from '../../hooks/useFormCurrencyState';
+import {useCurrencyFormState} from '../../hooks/useCurrencyFormState';
 import {getCurrencyNextIndex} from '../../utils/getCurrencyNextIndex';
 
 interface Props {}
@@ -20,9 +20,35 @@ const initialFormValues: FormInitialCurrencyState = {
 
 export const ExchangeWidgetContainer: React.FC<Props> = () => {
   const dispatch = useDispatch();
-  const timerRef = useRef<{timerId?:number}>({});
+  const timerRef = useRef<{timerId?: number}>({});
   const [currencyFrom, setCurrencyFrom] = useState<Currency>(CURRENCIES[0]);
   const [currencyTo, setCurrencyTo] = useState<Currency>(CURRENCIES[2]);
+  const rates = useSelector((state: GlobalState) => state.rates, shallowEqual);
+  const userBalance = useSelector((state: GlobalState) => state.userBalance, shallowEqual);
+  const currencyToRates = rates[currencyTo];
+
+  const validateOnSubmit = () => {
+    return checkBalance({currencyFrom, valueFrom: form.currencyFrom, userBalance});
+  };
+
+  const handleSuccessSubmit = (e: React.SyntheticEvent<HTMLElement> | null) => {
+    dispatch(exchangeCurrency({currencyFrom, currencyTo, form}));
+    dispatch(addNotification([{text: 'Exchange success!', variant: 'success'}]));
+  };
+
+  const handleErrorSubmit = (e: React.SyntheticEvent<HTMLElement> | null, errorMessage: string) => {
+    dispatch(addNotification([{text: errorMessage, variant: 'error'}]));
+  };
+
+  const currencyFromRate = currencyToRates && currencyToRates.loaded && currencyToRates.rates[currencyFrom];
+
+  const {form, handleChange, handleExchange} = useCurrencyFormState(
+    {success: handleSuccessSubmit, error: handleErrorSubmit},
+    validateOnSubmit,
+    initialFormValues,
+    currencyFromRate,
+  );
+
   useEffect(() => {
     const timer = timerRef.current;
     const updateRatesWithInterval = () => {
@@ -30,46 +56,16 @@ export const ExchangeWidgetContainer: React.FC<Props> = () => {
         clearTimeout(timer.timerId);
       }
 
-    dispatch(updateRatesForCurrency(currencyTo));
-      timer.timerId = setTimeout(() => {
+      dispatch(updateRatesForCurrency(currencyTo));
+      timer.timerId = (setTimeout(() => {
         updateRatesWithInterval();
-    }, UPDATE_RATES_DELAY) as unknown as number;
-  };
-
+      }, UPDATE_RATES_DELAY) as unknown) as number;
+    };
     updateRatesWithInterval();
-
     return () => clearTimeout(timer.timerId);
-  }, [currencyTo,  dispatch]);
+  }, [currencyTo, dispatch]);
 
-  const rates = useSelector((state: GlobalState) => state.rates, shallowEqual);
-  const userBalance = useSelector((state: GlobalState) => state.userBalance, shallowEqual);
-  const currencyToRates = rates[currencyTo];
-  const currencyFromRate = currencyToRates && currencyToRates.loaded && currencyToRates.rates[currencyFrom];
-  const validateOnSubmit = () => {
-    return checkBalance({currencyFrom, valueFrom: form.currencyFrom, userBalance});
-  };
-
-  const handleExchangeCallBack = (e: React.SyntheticEvent<HTMLElement> | null) => {
-    dispatch(exchangeCurrency({currencyFrom, currencyTo, form}));
-  };
-
-  const {form, success, submitting, errorMessage, handleChange, handleExchange} = useFormCurrencyState(
-    handleExchangeCallBack,
-    validateOnSubmit,
-    initialFormValues,
-    currencyFromRate,
-  );
-
-  useEffect(() => {
-    if (submitting) return;
-    if (success) {
-      dispatch(addNotification([{text: 'Exchange success!', variant: 'success'}]));
-    } else if (errorMessage) {
-      dispatch(addNotification([{text: errorMessage, variant: 'error'}]));
-    }
-  }, [success, submitting, dispatch, errorMessage]);
-
-  const setCurrencyNextIndex = (currentCurrency: Currency, prevCurrency: Currency) => {
+  const setCurrencyNextIndex = (currentCurrency: Currency, prevCurrency: Currency): number => {
     const currentIndex = CURRENCIES.indexOf(currentCurrency);
     const prevIndex = CURRENCIES.indexOf(prevCurrency);
     return getCurrencyNextIndex({currentIndex, prevIndex});
