@@ -50,7 +50,7 @@ exports[`renders correctly 1`] = `
     onClick={[Function]}
     title="Exchange"
   >
-    Exchange
+    Exchange money
   </Button>
 </section>
 `;

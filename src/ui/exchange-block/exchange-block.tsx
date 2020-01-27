@@ -57,8 +57,7 @@ export const ExchangeBlock: React.FC<Props> = ({
               <p className={s.text}>
                 {' '}
                 {resourcesTemplate(resources.ExchangeBlock.balanceText, {
-                  balance: parseMoney(currency, formattedValue(balance)),
-                  currency: CURRENCY_SYMBOL_MAP[currency],
+                  balance: parseMoney(currency, formattedValue(balance))
                 })}
               </p>
             </div>

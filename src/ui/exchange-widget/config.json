@@ -1,6 +1,6 @@
 {
   "ExchangeWidget": {
-    "buttonText": "Exchange",
+    "buttonText": "Exchange money",
     "buttonTitle": "Exchange",
     "currencyRateText": "%currencyTo%1 = %currencyFrom%"
   }

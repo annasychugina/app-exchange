@@ -12,7 +12,7 @@ const middlewares: Middleware[] = [thunk];
 
 if (process.env.NODE_ENV === 'development') {
   const createReduxLogger = require('redux-logger');
-  middlewares.push(createReduxLogger());
+  middlewares.push(createReduxLogger.createLogger());
 }
 
 const createStore = (): Store<GlobalState> => {
