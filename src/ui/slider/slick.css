@@ -22,7 +22,7 @@
 }
 
 .slick-dots li.slick-active button:before {
-  opacity: .85;
+  opacity: 0.85;
   color: white;
 }
 

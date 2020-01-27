@@ -18,6 +18,7 @@ rules:
   no-debugger: ["error"]
   no-restricted-globals: [2, "localStorage", "sessionStorage"]
   no-console: ["warn"]
+  no-useless-computed-key: ["off"]
   no-unneeded-ternary: ["warn", {
     "defaultAssignment": false
   }]

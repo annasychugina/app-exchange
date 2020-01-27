@@ -12,7 +12,7 @@
   border-color: white;
 
   &:focus {
-    border-color: #EB008D;
+    border-color: #eb008d;
   }
   ::-ms-clear {
     display: none;

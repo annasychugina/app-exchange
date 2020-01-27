@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Currency, CurrencyBlockType, FieldInputCallback, InputValueState} from '../../types/types';
 import {ExchangeBlock} from '../exchange-block/exchange-block';
 import {CURRENCIES, CURRENCY_SYMBOL_MAP} from '../../constants/currency';
@@ -68,6 +68,7 @@ export const ExchangeWidgetView: React.FC<Props> = ({
           onCurrencyValueChange={handleCurrencyValueChange}
           inputValue={String(valueTo)}
           currencyAmountStr={currencyAmountStr}
+          isRateLoading={isRateLoading}
         />
       </div>
       <Button

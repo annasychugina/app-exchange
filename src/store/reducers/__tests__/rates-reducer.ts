@@ -1,15 +1,6 @@
-import {createExchangeReducer} from '../exchange-reducer';
-import {ExchangeActionType} from '../../../actions/exchangeCurrency';
 import {ratesReducer} from '../rates-reducer';
 import {ActionType} from '../../../actions/updateRates';
 import {Currency} from '../../../types/types';
-
-const initData = {
-  RUB: 100000.2,
-  USD: 205.2,
-  GBP: 20,
-  EUR: 200,
-};
 
 describe('Rates Reducer', () => {
   it('init state correct', () => {

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import cn from 'classnames';
 import {Currency, CurrencyBlockType, FieldInputCallback} from '../../types/types';
 import {NumberFormatInput} from '../number-format-input/number-format-input';
@@ -6,10 +6,11 @@ import {Slider} from '../slider/slider';
 import {CURRENCY_SYMBOL_MAP} from '../../constants/currency';
 import {resourcesTemplate} from '../../utils/resourcesTemplate';
 import {formattedValue} from '../../utils/formatters';
+import {parseMoney} from '../../utils/parseMoney';
+import {Preloader} from '../preloader/preloader';
 import resources from './config.json';
 
 import s from './exchange-block.module.css';
-import {parseMoney} from '../../utils/parseMoney';
 
 interface Props {
   currency: Currency;
@@ -21,6 +22,7 @@ interface Props {
   currencyItems: Array<Currency>;
   balance: number;
   currencyAmountStr: string;
+  isRateLoading?: boolean;
 }
 
 export const ExchangeBlock: React.FC<Props> = ({
@@ -33,11 +35,11 @@ export const ExchangeBlock: React.FC<Props> = ({
   inputValue,
   balance,
   currencyAmountStr,
+  isRateLoading = false,
 }) => {
   const handleSlide = (index: number) => {
     onCurrencyChange(currencyItems[index]);
   };
-
   return (
     <div className={cn(s.root, s[`root_${type}`])}>
       <Slider onSlideChange={handleSlide} currentSlide={currencyItems.indexOf(currency)}>
@@ -52,6 +54,7 @@ export const ExchangeBlock: React.FC<Props> = ({
                 onChange={onCurrencyValueChange}
               />
             </div>
+
             <div className={s.row}>
               <p className={s.text}>
                 {' '}
@@ -63,7 +66,7 @@ export const ExchangeBlock: React.FC<Props> = ({
             </div>
             {rate && type === CurrencyBlockType.currencyTo && (
               <div className={cn(s.row, s.row_rate)}>
-                <p className={cn(s.text, s.text_rate)}>{currencyAmountStr}</p>
+                {isRateLoading ? <Preloader /> : <p className={cn(s.text, s.text_rate)}>{currencyAmountStr}</p>}
               </div>
             )}
           </div>

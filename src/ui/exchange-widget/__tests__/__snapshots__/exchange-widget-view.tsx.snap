@@ -37,6 +37,7 @@ exports[`renders correctly 1`] = `
         ]
       }
       inputValue="10"
+      isRateLoading={false}
       onCurrencyChange={[Function]}
       onCurrencyValueChange={[Function]}
       rate={1.2}

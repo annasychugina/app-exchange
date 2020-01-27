@@ -1,7 +1,7 @@
 .root {
   &_currencyFrom {
     position: relative;
-   background: linear-gradient(to bottom, #1E91E4, #3F90EA);
+    background: linear-gradient(to bottom, #1e91e4, #3f90ea);
     &::after {
       content: '';
       display: block;
@@ -11,12 +11,12 @@
       height: 20px;
       left: 50%;
       top: 100%;
-      background-color: #3F90EA;
+      background-color: #3f90ea;
     }
   }
 
   &_currencyTo {
-    background: linear-gradient(to bottom,  #2351C2, #2757CC);
+    background: linear-gradient(to bottom, #2351c2, #2757cc);
   }
 }
 
@@ -41,7 +41,7 @@
 
 .text {
   margin-top: 15px;
-  color: rgba(255,255,255, .85);
+  color: rgba(255, 255, 255, 0.85);
   font-size: 12px;
   &_rate {
     margin-top: 0;

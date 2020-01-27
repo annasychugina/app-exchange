@@ -3,10 +3,11 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 
-import { configure } from 'enzyme';
+import {configure} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import '@testing-library/jest-dom/extend-expect';
 
-configure({ adapter: new Adapter() });
+configure({adapter: new Adapter()});
 
 window.matchMedia = jest.fn().mockImplementation(query => {
   return {
@@ -20,5 +21,3 @@ window.matchMedia = jest.fn().mockImplementation(query => {
     dispatchEvent: jest.fn(),
   };
 });
-
-import '@testing-library/jest-dom/extend-expect';

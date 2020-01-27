@@ -15,7 +15,7 @@
   border-style: none;
 
   &:disabled {
-    opacity: .2;
+    opacity: 0.2;
     pointer-events: none;
   }
 
@@ -43,7 +43,6 @@
   animation: spinner-offset 3s linear infinite;
   stroke: white;
 }
-
 
 @keyframes spinner-rotate {
   0% {

@@ -80,6 +80,6 @@ export const useFormCurrencyState = (
     errorMessage,
     submitting,
     success,
-    updateFieldName
+    updateFieldName,
   };
 };
