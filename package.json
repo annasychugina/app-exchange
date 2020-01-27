@@ -57,6 +57,32 @@
     "redux-devtools-extension": "^2.13.8",
     "typescript": "~3.7.2"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "CI=true npm test"
+    }
+  },
+  "lint-staged": {
+    "linters": {
+      "*.css": [
+        "prettier --write",
+        "git add"
+      ],
+      "*.{ts,tsx}": [
+        "eslint --fix",
+        "git add"
+      ],
+      "*.{md,json}": [
+        "prettier --write",
+        "git add"
+      ]
+    },
+    "ignore": [
+      "src/styles/reset.css",
+      "src/styles/global.css"
+    ]
+  },
   "browserslist": {
     "production": [
       ">0.2%",
