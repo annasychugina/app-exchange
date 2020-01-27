@@ -50,6 +50,7 @@
     "@types/redux-mock-store": "^1.0.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
+    "husky": "^4.2.1",
     "lint-staged": "^10.0.3",
     "npm-run-all": "^4.1.5",
     "postcss-nested": "^4.2.1",
@@ -70,23 +71,14 @@
     }
   },
   "lint-staged": {
-    "linters": {
-      "*.css": [
-        "prettier --write",
-        "git add"
-      ],
-      "*.{ts,tsx}": [
-        "eslint --fix",
-        "git add"
-      ],
-      "*.{md,json}": [
-        "prettier --write",
-        "git add"
-      ]
-    },
-    "ignore": [
-      "src/styles/reset.css",
-      "src/styles/global.css"
+    "*.css": [
+      "prettier --write"
+    ],
+    "*.{ts,tsx}": [
+      "eslint --fix"
+    ],
+    "*.{md,json}": [
+      "prettier --write"
     ]
   },
   "browserslist": {

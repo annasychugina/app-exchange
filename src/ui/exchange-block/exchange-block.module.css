@@ -47,3 +47,9 @@
     margin-top: 0;
   }
 }
+
+.error {
+  display: block;
+  font-size: 13px;
+  color: #e01f19;
+}

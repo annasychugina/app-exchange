@@ -1,5 +1,6 @@
 {
   "ExchangeBlock": {
-    "balanceText": "You have\u00A0%balance%"
+    "balanceText": "You have\u00A0%balance%",
+    "getRateError": "Failed to get rate"
   }
 }
