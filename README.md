@@ -18,8 +18,6 @@ Use jest & enzyme & @testing-library/react-hooks
 yarn test
 ```
 
-https://github.com/timarney/react-app-rewired
-
 ## Check ts
 
 ```
